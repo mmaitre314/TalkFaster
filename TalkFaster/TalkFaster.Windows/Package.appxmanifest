@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="9456302f-4b68-4a6a-a96f-922dc2b0c295" Publisher="CN=Matthieu" Version="1.0.0.0" />
+  <Identity Name="9456302f-4b68-4a6a-a96f-922dc2b0c295" Publisher="CN=Matthieu" Version="1.0.0.1" />
   <Properties>
     <DisplayName>TalkFaster.Windows</DisplayName>
     <PublisherDisplayName>Matthieu</PublisherDisplayName>

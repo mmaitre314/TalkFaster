@@ -17,6 +17,8 @@
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
     <NuGetPackageImportStamp>c3d42fb9</NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/c5ce74a7-1c4a-4bc9-b7fe-c2d6c54e4379/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/TalkFaster</ApplicationInsightsResourceId>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
