@@ -181,3 +181,5 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+/TalkFaster/TalkFaster.Windows/Assets/Thumbs.db
+/TalkFaster/TalkFaster.WindowsPhone/Assets/Thumbs.db

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Note: Vector http://apps.microsoft.com/webpdp/app/b9ccde1d-99c9-41c7-867f-f249c545af8c generates all the PNGs out of this file -->
+<svg 
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.1" 
+    baseProfile="full" 
+    width="800" 
+    height="800" 
+    viewBox="0 0 800.00 800.00"
+    enable-background="new 0 0 800.00 800.00"
+    xml:space="preserve"
+    >
+  <path fill="#FFFFFF" fill-opacity="1" stroke-linejoin="round" stroke="#FFFFFF" stroke-opacity="1" d="M 368,400L  41,211L  41,589L 368,400 Z "/>
+  <path fill="#FFFFFF" fill-opacity="1" stroke-linejoin="round" stroke="#FFFFFF" stroke-opacity="1" d="M 759,400L 432,211L 432,589L 759,400 Z "/>
+</svg>
