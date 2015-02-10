@@ -16,8 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.ApplicationInsights;
-
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
+using Windows.Storage;
 
 namespace TalkFaster
 {
@@ -129,6 +128,11 @@ namespace TalkFaster
             await ((MainPage)((Frame)Window.Current.Content).Content).OpenFileAsync(continuation.Files[0]);
         }
 #endif
+
+        protected override async void OnFileActivated(FileActivatedEventArgs args)
+        {
+            await ((MainPage)((Frame)Window.Current.Content).Content).OpenFileAsync((StorageFile)args.Files[0]);
+        }
 
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
