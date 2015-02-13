@@ -46,18 +46,27 @@ namespace TalkFaster
             }
             SetPlaybackRate();
 
-            // Restore file being played
-            if (m_settings.Keys.Contains("FileToken"))
+            // Use the file passed as input
+            var file = e.Parameter as StorageFile;
+            if (file == null)
             {
-                var token = (string)m_settings["FileToken"];
-                try
+                // Otherwise try to restore the file played before
+                if (m_settings.Keys.Contains("FileToken"))
                 {
-                    var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
-                    await OpenFileAsync(file);
+                    try
+                    {
+                        var token = (string)m_settings["FileToken"];
+                        file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
-                catch (Exception)
-                {
-                }
+            }
+
+            if (file != null)
+            {
+                await OpenFileAsync(file);
             }
             else
             {

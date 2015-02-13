@@ -52,6 +52,11 @@ namespace TalkFaster
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            InitializeRootFrame(e.Arguments);
+        }
+
+        private void InitializeRootFrame(object args)
+        {
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -64,10 +69,10 @@ namespace TalkFaster
                 // TODO: change this value to a cache size that is appropriate for your application
                 rootFrame.CacheSize = 1;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: Load state from previously suspended application
-                }
+                //if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                //{
+                //    // TODO: Load state from previously suspended application
+                //}
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
@@ -89,17 +94,13 @@ namespace TalkFaster
                 rootFrame.ContentTransitions = null;
                 rootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
-
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
-                {
-                    throw new Exception("Failed to create initial page");
-                }
             }
 
-            // Ensure the current window is active
+            if (!rootFrame.Navigate(typeof(MainPage), args))
+            {
+                throw new Exception("Failed to create initial page");
+            }
+
             Window.Current.Activate();
         }
 
@@ -116,7 +117,7 @@ namespace TalkFaster
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
 
-        protected override async void OnActivated(IActivatedEventArgs args)
+        protected override void OnActivated(IActivatedEventArgs args)
         {
             var continuation = args as FileOpenPickerContinuationEventArgs;
             if ((continuation == null) ||
@@ -125,13 +126,13 @@ namespace TalkFaster
                 return;
             }
 
-            await ((MainPage)((Frame)Window.Current.Content).Content).OpenFileAsync(continuation.Files[0]);
+            InitializeRootFrame(continuation.Files[0]);
         }
 #endif
 
-        protected override async void OnFileActivated(FileActivatedEventArgs args)
+        protected override void OnFileActivated(FileActivatedEventArgs args)
         {
-            await ((MainPage)((Frame)Window.Current.Content).Content).OpenFileAsync((StorageFile)args.Files[0]);
+            InitializeRootFrame(args.Files[0]);
         }
 
         /// <summary>
