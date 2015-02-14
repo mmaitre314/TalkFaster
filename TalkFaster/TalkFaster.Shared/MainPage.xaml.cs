@@ -9,6 +9,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.System.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -69,14 +70,21 @@ namespace TalkFaster
             }
             else
             {
-                Buttons.Visibility = Visibility.Visible;
+                if (m_settings.Keys.Contains("Uri"))
+                {
+                    OpenUri((string)m_settings["Uri"]);
+                }
+                else
+                {
+                    Buttons.Visibility = Visibility.Visible;
+                }
             }
         }
 
 #if WINDOWS_PHONE_APP
-        private void Open_Click(object sender, RoutedEventArgs e)
+        private void OpenFile_Click(object sender, RoutedEventArgs e)
 #else
-        private async void Open_Click(object sender, RoutedEventArgs e)
+        private async void OpenFile_Click(object sender, RoutedEventArgs e)
 #endif
         {
             // Select a file
@@ -101,16 +109,37 @@ namespace TalkFaster
         {
             try
             {
-                var stream = await file.OpenAsync(FileAccessMode.Read);
-
                 Video.AutoPlay = true;
+
+                var stream = await file.OpenAsync(FileAccessMode.Read);
+                Video.SetSource(stream, file.ContentType);
+
                 Video.IsFullWindow = true;
                 Video.Visibility = Visibility.Visible;
 
-                Video.SetSource(stream, file.ContentType);
+                StorageApplicationPermissions.FutureAccessList.Clear();
+                m_settings.Remove("Uri");
+                m_settings["FileToken"] = StorageApplicationPermissions.FutureAccessList.Add(file);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void OpenUri(string uri)
+        {
+            try
+            {
+                Video.AutoPlay = true;
+                
+                Video.Source = new Uri(uri);
+
+                Video.IsFullWindow = true;
+                Video.Visibility = Visibility.Visible;
 
                 StorageApplicationPermissions.FutureAccessList.Clear();
-                m_settings["FileToken"] = StorageApplicationPermissions.FutureAccessList.Add(file);
+                m_settings.Remove("FileToken");
+                m_settings["Uri"] = Video.Source.AbsoluteUri;
             }
             catch (Exception)
             {
@@ -163,6 +192,21 @@ namespace TalkFaster
                 // to try to avoid slideshow playback on Nokia 520 Phone
                 SetPlaybackRate();
             }
+        }
+
+        private void UrlText_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                OpenUri(UrlText.Text);
+                e.Handled = true;
+                UrlFlyout.Hide();
+            }
+        }
+
+        private void UrlFlyout_Opening(object sender, object e)
+        {
+            UrlText.Text = "";
         }
     }
 }

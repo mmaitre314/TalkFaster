@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        
         <MediaElement 
             Name="Video" 
             AreTransportControlsEnabled="True" 
@@ -17,19 +18,48 @@
             PointerPressed="Video_PointerPressed"
             CurrentStateChanged="Video_CurrentStateChanged"
             />
-        <StackPanel Name="Buttons" HorizontalAlignment="Right" VerticalAlignment="Center"  Width="110" Visibility="Collapsed">
+        
+        <StackPanel Name="Buttons" HorizontalAlignment="Right" VerticalAlignment="Center"  Width="110" Visibility="Visible">
+            
             <Button
-                Name="Open"
+                Name="OpenFile"
                 Width="100"
-                Click="Open_Click"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                Open
+                Click="OpenFile_Click"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Content="Open File" />
+
+            <Button
+                Name="OpenUrl"
+                Width="100"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Content="Open URL"
+                >
+                <Button.Flyout>
+                    <Flyout x:Name="UrlFlyout" Opening="UrlFlyout_Opening">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock 
+                                FontSize="18" 
+                                Text="URL" 
+                                VerticalAlignment="Center" 
+                                Padding="10, 0, 10, 0" />
+                            <TextBox
+                                Name="UrlText"
+                                InputScope="Url" 
+                                VerticalAlignment="Center"
+                                Width="300" 
+                                KeyDown="UrlText_KeyDown" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
             </Button>
+
             <ListBox Name="PlaybackRate" Width="100" SelectionChanged="PlaybackRate_SelectionChanged">
                 <ListBoxItem>Normal</ListBoxItem>
                 <ListBoxItem>Fast</ListBoxItem>
                 <ListBoxItem>Faster</ListBoxItem>
             </ListBox>
+            
         </StackPanel>
+        
     </Grid>
 </Page>
