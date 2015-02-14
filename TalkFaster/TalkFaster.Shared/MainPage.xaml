@@ -15,6 +15,7 @@
             AutoPlay="False"
             Visibility="Collapsed"
             PointerPressed="Video_PointerPressed"
+            CurrentStateChanged="Video_CurrentStateChanged"
             />
         <StackPanel Name="Buttons" HorizontalAlignment="Right" VerticalAlignment="Center"  Width="110" Visibility="Collapsed">
             <Button

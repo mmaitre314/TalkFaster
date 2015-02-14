@@ -44,7 +44,6 @@ namespace TalkFaster
             {
                 PlaybackRate.SelectedIndex = 1;
             }
-            SetPlaybackRate();
 
             // Use the file passed as input
             var file = e.Parameter as StorageFile;
@@ -106,7 +105,6 @@ namespace TalkFaster
 
                 Video.AutoPlay = true;
                 Video.IsFullWindow = true;
-                SetPlaybackRate();
                 Video.Visibility = Visibility.Visible;
 
                 Video.SetSource(stream, file.ContentType);
@@ -149,7 +147,22 @@ namespace TalkFaster
 
         private void PlaybackRate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SetPlaybackRate();
+            // Avoid setting the playback rate when being navigated to as this
+            // increases the chance of slideshow playback on Nokia 520 Phone
+            if (Video.CurrentState != MediaElementState.Closed)
+            {
+                SetPlaybackRate();
+            }
+        }
+
+        private void Video_CurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            if (((MediaElement)sender).CurrentState == MediaElementState.Playing)
+            {
+                // Delay speeding up video until after playback has started
+                // to try to avoid slideshow playback on Nokia 520 Phone
+                SetPlaybackRate();
+            }
         }
     }
 }
