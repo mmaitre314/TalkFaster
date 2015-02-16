@@ -20,10 +20,18 @@
       </m2:VisualElements>
       <Extensions>
         <Extension Category="windows.fileTypeAssociation">
-          <FileTypeAssociation Name="video">
+          <FileTypeAssociation Name="mp4">
             <EditFlags OpenIsSafe="true" />
             <SupportedFileTypes>
               <FileType ContentType="video/mp4">.mp4</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="wmv">
+            <EditFlags OpenIsSafe="true" />
+            <SupportedFileTypes>
+              <FileType ContentType="video/x-ms-wmv">.wmv</FileType>
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>
