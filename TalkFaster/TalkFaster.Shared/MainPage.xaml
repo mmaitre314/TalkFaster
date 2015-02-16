@@ -14,29 +14,40 @@
             Name="Video" 
             AreTransportControlsEnabled="True" 
             AutoPlay="False"
-            Visibility="Collapsed"
+            Visibility="Visible"
+            IsFullWindow="True"
             PointerPressed="Video_PointerPressed"
             CurrentStateChanged="Video_CurrentStateChanged"
-            MediaEnded="Video_MediaEnded" 
-            MediaFailed="Video_MediaFailed"
             />
         
-        <StackPanel Name="Buttons" HorizontalAlignment="Right" VerticalAlignment="Center"  Width="110" Visibility="Visible">
-            
-            <Button
-                Name="OpenFile"
-                Width="100"
-                Click="OpenFile_Click"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                Content="Open File" />
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar Name="AppBar">
 
-            <Button
-                Name="OpenUrl"
-                Width="100"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                Content="Open URL"
-                >
-                <Button.Flyout>
+            <AppBarButton Label="Full screen" Icon="FullScreen" Click="AppBarButton_Click" />
+
+            <AppBarButton Label="Speed" Icon="Switch">
+                <AppBarButton.Flyout>
+                    <Flyout x:Name="SpeedFlyout">
+                        <StackPanel 
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Visibility="Visible">
+                            <ListBox 
+                                Name="PlaybackRate" 
+                                SelectionChanged="PlaybackRate_SelectionChanged">
+                                <ListBoxItem>Normal</ListBoxItem>
+                                <ListBoxItem>Fast</ListBoxItem>
+                                <ListBoxItem>Faster</ListBoxItem>
+                            </ListBox>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+            <AppBarButton Label="Open URL" Icon="Download">
+                <AppBarButton.Flyout>
                     <Flyout x:Name="UrlFlyout" Opening="UrlFlyout_Opening">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock 
@@ -52,16 +63,11 @@
                                 KeyDown="UrlText_KeyDown" />
                         </StackPanel>
                     </Flyout>
-                </Button.Flyout>
-            </Button>
-
-            <ListBox Name="PlaybackRate" Width="100" SelectionChanged="PlaybackRate_SelectionChanged">
-                <ListBoxItem>Normal</ListBoxItem>
-                <ListBoxItem>Fast</ListBoxItem>
-                <ListBoxItem>Faster</ListBoxItem>
-            </ListBox>
+                </AppBarButton.Flyout>
+            </AppBarButton>
             
-        </StackPanel>
-        
-    </Grid>
+            <AppBarButton Label="Open" Icon="OpenFile" Click="OpenFile_Click" />
+
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

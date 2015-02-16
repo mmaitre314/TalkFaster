@@ -36,6 +36,8 @@ namespace TalkFaster
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            ShowAppBar();
+
             // Restore playback rate
             if (m_settings.Keys.Contains("PlaybackRateIndex"))
             {
@@ -68,16 +70,9 @@ namespace TalkFaster
             {
                 await OpenFileAsync(file);
             }
-            else
+            else if (m_settings.Keys.Contains("Uri"))
             {
-                if (m_settings.Keys.Contains("Uri"))
-                {
-                    OpenUri((string)m_settings["Uri"]);
-                }
-                else
-                {
-                    Buttons.Visibility = Visibility.Visible;
-                }
+                OpenUri((string)m_settings["Uri"]);
             }
         }
 
@@ -153,15 +148,12 @@ namespace TalkFaster
             {
                 case 0:
                     Video.PlaybackRate = 1;
-                    Video.DefaultPlaybackRate = 1;
                     break;
                 case 1:
                     Video.PlaybackRate = 1.4;
-                    Video.DefaultPlaybackRate = 1.4;
                     break;
                 case 2:
                     Video.PlaybackRate = 2;
-                    Video.DefaultPlaybackRate = 2;
                     break;
             }
             m_settings["PlaybackRateIndex"] = index;
@@ -169,26 +161,7 @@ namespace TalkFaster
 
         private void Video_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            if (Video.IsFullWindow)
-            {
-                ShowUI();
-            }
-            else
-            {
-                HideUI();
-            }
-        }
-
-        private void ShowUI()
-        {
-            Video.IsFullWindow = false;
-            Buttons.Visibility = Visibility.Visible;
-        }
-
-        private void HideUI()
-        {
-            Video.IsFullWindow = true;
-            Buttons.Visibility = Visibility.Collapsed;
+            ShowAppBar();
         }
 
         private void PlaybackRate_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -205,9 +178,15 @@ namespace TalkFaster
         {
             if (((MediaElement)sender).CurrentState == MediaElementState.Playing)
             {
+                HideAppBar();
+
                 // Delay speeding up video until after playback has started
                 // to try to avoid slideshow playback on Nokia 520 Phone
                 SetPlaybackRate();
+            }
+            else
+            {
+                ShowAppBar(); 
             }
         }
 
@@ -226,14 +205,27 @@ namespace TalkFaster
             UrlText.Text = "";
         }
 
-        private void Video_MediaEnded(object sender, RoutedEventArgs e)
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowUI();
+            HideAppBar();
         }
 
-        private void Video_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        private void ShowAppBar()
         {
-            ShowUI();
+#if WINDOWS_PHONE_APP
+            AppBar.Visibility = Visibility.Visible;
+#else
+            AppBar.IsOpen = true;
+#endif
+        }
+
+        private void HideAppBar()
+        {
+#if WINDOWS_PHONE_APP
+            AppBar.Visibility = Visibility.Collapsed;
+#else
+            AppBar.IsOpen = false;
+#endif
         }
     }
 }
