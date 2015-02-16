@@ -17,6 +17,8 @@
             Visibility="Collapsed"
             PointerPressed="Video_PointerPressed"
             CurrentStateChanged="Video_CurrentStateChanged"
+            MediaEnded="Video_MediaEnded" 
+            MediaFailed="Video_MediaFailed"
             />
         
         <StackPanel Name="Buttons" HorizontalAlignment="Right" VerticalAlignment="Center"  Width="110" Visibility="Visible">

@@ -169,9 +169,26 @@ namespace TalkFaster
 
         private void Video_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            // Toggle button visibility
-            Video.IsFullWindow = !Video.IsFullWindow;
-            Buttons.Visibility = Video.IsFullWindow ? Visibility.Collapsed : Visibility.Visible;
+            if (Video.IsFullWindow)
+            {
+                ShowUI();
+            }
+            else
+            {
+                HideUI();
+            }
+        }
+
+        private void ShowUI()
+        {
+            Video.IsFullWindow = false;
+            Buttons.Visibility = Visibility.Visible;
+        }
+
+        private void HideUI()
+        {
+            Video.IsFullWindow = true;
+            Buttons.Visibility = Visibility.Collapsed;
         }
 
         private void PlaybackRate_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -207,6 +224,16 @@ namespace TalkFaster
         private void UrlFlyout_Opening(object sender, object e)
         {
             UrlText.Text = "";
+        }
+
+        private void Video_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            ShowUI();
+        }
+
+        private void Video_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            ShowUI();
         }
     }
 }
