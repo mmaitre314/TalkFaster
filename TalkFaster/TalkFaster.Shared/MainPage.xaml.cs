@@ -102,6 +102,8 @@ namespace TalkFaster
 
         public async Task OpenFileAsync(StorageFile file)
         {
+            App.Telemetry.TrackPageView("OpenFile");
+
             try
             {
                 Video.AutoPlay = true;
@@ -123,6 +125,8 @@ namespace TalkFaster
 
         public void OpenUri(string uri)
         {
+            App.Telemetry.TrackPageView("OpenUri");
+
             try
             {
                 Video.AutoPlay = true;
@@ -144,19 +148,25 @@ namespace TalkFaster
         private void SetPlaybackRate()
         {
             int index = PlaybackRate.SelectedIndex;
+            double playbackRate;
             switch (index)
             {
-                case 0:
-                    Video.PlaybackRate = 1;
-                    break;
-                case 1:
-                    Video.PlaybackRate = 1.4;
-                    break;
-                case 2:
-                    Video.PlaybackRate = 2;
-                    break;
+                case 0: playbackRate = 1; break;
+                case 1: playbackRate = 1.4; break;
+                case 2: playbackRate = 2; break;
+                default: throw new ArgumentOutOfRangeException("PlaybackRate.SelectedIndex");
             }
+            Video.PlaybackRate = playbackRate;
             m_settings["PlaybackRateIndex"] = index;
+
+            App.Telemetry.TrackEvent(
+                "PlaybackRate",
+                new Dictionary<string, string>(),
+                new Dictionary<string, double>()
+                    {
+                        {"PlaybackRate", playbackRate}
+                    }
+                );
         }
 
         private void Video_PointerPressed(object sender, PointerRoutedEventArgs e)

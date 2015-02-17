@@ -28,7 +28,7 @@ namespace TalkFaster
         /// <summary>
         /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
         /// </summary>
-        public TelemetryClient TelemetryClient = new TelemetryClient();
+        static public TelemetryClient Telemetry = new TelemetryClient();
 
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
